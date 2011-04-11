@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using ErikEJ.SqlCeScripting;
 
 namespace SchemaCreation
@@ -26,14 +27,14 @@ namespace SchemaCreation
                 using (IRepository targetRepository = new DB4Repository(target))
                 {
                     SqlCeDiff.CreateDiffScript(sourceRepository, targetRepository, diffGenerator);
-                    OutputDiffScript(diffGenerator.GeneratedScript, outputPath);
+                    BuildDiffScript(diffGenerator.GeneratedScript, outputPath);
                 }
             }
         }
 
-        private static void OutputDiffScript(string diffScript, string outputPath)
+        private static void BuildDiffScript(string diffScript, string outputPath)
         {
-            string warning = @"-- This database diff script contains the following objects:
+            var warning = @"-- This database diff script contains the following objects:
                                -- - Tables:  Any that are not in the destination
                                -- -          (tables that are only in the destination are not dropped)
                                -- - Columns: Any added, deleted, changed columns for existing tables
@@ -41,16 +42,22 @@ namespace SchemaCreation
                                -- - Foreign keys: Any added, deleted foreign keys for existing tables
                                -- ** Make sure to test against a production version of the destination database! ** " + Environment.NewLine + Environment.NewLine;
 
+            
+            var output = new StringBuilder();
+            output.AppendLine(warning);
+            output.AppendLine(diffScript);
+
+            SaveDiffScript(outputPath, output.ToString());
+        }
+
+        private static void SaveDiffScript(string outputPath, string output)
+        {
             if (File.Exists(outputPath))
                 throw new ApplicationException("The output path already exists - please change the filename or delete the previous version");
 
-            CreateDiffFile(outputPath, warning, diffScript);
-        }
 
-        private static void CreateDiffFile(string outputPath, string warning, string diffScript)
-        {
             var outputWriter = new StreamWriter(outputPath);
-            outputWriter.Write(warning + diffScript);
+            outputWriter.Write(output);
             outputWriter.Flush();
             outputWriter.Close();
         }
