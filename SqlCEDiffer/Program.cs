@@ -55,7 +55,6 @@ namespace SqlCEDiffer
             if (File.Exists(outputPath))
                 throw new ApplicationException("The output path already exists - please change the filename or delete the previous version");
 
-
             var outputWriter = new StreamWriter(outputPath);
             outputWriter.Write(output);
             outputWriter.Flush();

@@ -1,0 +1,16 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+<PropertyGroup>
+    <SourceFileRootFolder>..\</SourceFileRootFolder>
+	<TargetFile Condition=" '$(TargetFile)' == '' ">-target:c:\quiz.sdf</TargetFile>
+	<Source Condition=" '$(Source)' == '' ">-source:C:\quizfactor.sdf</Source>
+	<OutputPath Condition=" '$(OutputPath)' == '' ">c:\99999.sql</OutputPath>
+</PropertyGroup>
+
+<!--This is the 1st task called -->
+<Target Name="Build">
+		<Message Text="Starting Sql Differencing" />
+		<Exec Command="C:\Projects\ResearchProjects\SchemaCreation\SqlCEDiffer\bin\Debug\SqlCEDiffer.exe $(Source) $(TargetFile) $(OutputPath)" />
+</Target>
+
+</Project>
