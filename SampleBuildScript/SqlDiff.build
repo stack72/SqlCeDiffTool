@@ -2,9 +2,9 @@
 
 <PropertyGroup>
     <SourceFileRootFolder>..\</SourceFileRootFolder>
-	<TargetFile Condition=" '$(TargetFile)' == '' ">-target:c:\quiz.sdf</TargetFile>
-	<Source Condition=" '$(Source)' == '' ">-source:C:\quizfactor.sdf</Source>
-	<OutputPath Condition=" '$(OutputPath)' == '' ">c:\99999.sql</OutputPath>
+	<TargetFile Condition=" '$(TargetFile)' == '' ">-target:c:\temp\skillsmatter\quiz.sdf</TargetFile>
+	<Source Condition=" '$(Source)' == '' ">-source:C:\temp\skillsmatter\quizfactor.sdf</Source>
+	<OutputPath Condition=" '$(OutputPath)' == '' ">c:\temp\skillsmatter\samplefromcmd.sql</OutputPath>
 </PropertyGroup>
 
 <!--This is the 1st task called -->
